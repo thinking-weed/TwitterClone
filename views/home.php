@@ -17,7 +17,7 @@ $view_tweets = [
         'user_image_name' => 'sample-person.jpg', 
         'tweet_body' => '今プログラミングをしています。',
         'tweet_image_name' => null,
-        'tweet_created_at' => '2021-03-15-14:00:00',
+        'tweet_created_at' => '2023-05-15-14:00:00',
         'like_id' => null,
         'like_count' => 0       
     ],
@@ -33,6 +33,48 @@ $view_tweets = [
         'like_count' => 1       
     ]
 ];
+////////////////////////////////////////
+/////便利な関数
+///////////////////////////////////
+/**指定した日時からどれだけ経過したかを取得
+
+@param string $datetime 日時;
+@return string;
+*/
+                                                    //タイプヒーティング
+function convertTodayTimeAgo(string $datetime)      //指定したデータ型（今回ならstring）以外の文字が入るとエラー
+{
+    $unix = strtotime($datetime);       //投稿日時をunixタイム1970年１月１日０時０秒からの経過秒数に直す
+    $now = time();                      //unixタイム開始から現在（ブラウザ視聴時）までの秒数
+    $diff_sec = $now - $unix;
+
+    if($diff_sec < 60){//１分未満の場合
+        $time = $diff_sec;
+        $unit = '秒前';
+    } elseif($diff_sec < 3600){//１時間未満の場合
+        $time = $diff_sec /60;
+        $unit = '分前';
+    } elseif($diff_sec < 86400){//24時間未満の場合
+        $time = $diff_sec /3600;
+        $unit = '時間前';
+    } elseif($diff_sec < 2764800){//32日未満の場合
+        $time = $diff_sec /86400;
+        $unit = '日前';
+    } 
+        else {
+        if(date('Y') !== date('Y',$unix)){
+            $time = date('Y年n月j日',$unix);
+        }else{
+            $time = date('n月j日',$unix);      
+        }
+        return $time;
+    }
+
+        return (int)$time . $unit; //(int)は型キャスト：intで表せない値は０、小数点は切り捨て
+
+}    
+
+
 
 ?>
 
@@ -136,7 +178,7 @@ $view_tweets = [
                             <div class="name">
                                 <a href="profile.php?user_id=<?php echo $view_tweet['user_id']; ?>">
                                     <span class="nickname"><?php echo $view_tweet['user_nickname']?></span>
-                                    <span class="user-name">@<?php echo $view_tweet['user_name']; ?>" ・ <?php echo $view_tweet['tweet_created_at']; ?></span>
+                                    <span class="user-name">@<?php echo $view_tweet['user_name']; ?>" ・ <?php echo convertTodayTimeAgo($view_tweet['tweet_created_at']); ?></span>
                                 </a>
                             </div>
                             <p><?php echo $view_tweet['tweet_body']; ?></p>
