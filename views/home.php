@@ -36,6 +36,28 @@ $view_tweets = [
 ////////////////////////////////////////
 /////便利な関数
 ///////////////////////////////////
+
+/*画像ファイル名から画像のURLを生成する
+@param（第１引数）$name string  画像ファイル名
+@param（第２引数）$type string  user-iconかtweetか
+@return void
+
+*/
+
+function buildImagePath(string $name = null, string $type)
+{             //※注意   上の=nullは、$nameに値がないときにnullになる。第１引数がnullで、
+             //第２引数は値があるというのは不自然なので、本来は逆にすべき
+
+    if( $type === 'user' && !isset($name)){ //左は$nameが定義されていなければ
+        return HOME_URL.'views/img/icon-default-user.svg';
+    }
+        return HOME_URL.'views/img_uploaded/'.$type.'/'. htmlspecialchars($name);
+};
+
+//htmlspecialcharsは文字の中には HTML において特殊な意味を持つものがあり、 
+//それらの本来の値を表示したければ HTML の表現形式に変換してやらなければなりません。
+// この関数は、これらの変換を行った結果の文字列を返します。
+
 /**指定した日時からどれだけ経過したかを取得
 
 @param string $datetime 日時;
@@ -72,7 +94,7 @@ function convertTodayTimeAgo(string $datetime)      //指定したデータ型�
 
         return (int)$time . $unit; //(int)は型キャスト：intで表せない値は０、小数点は切り捨て
 
-}    
+};    
 
 
 
@@ -170,21 +192,21 @@ function convertTodayTimeAgo(string $datetime)      //指定したデータ型�
                 <?php foreach ($view_tweets as $view_tweet):  ?>
                     <div class="tweet">
                         <div class="user">
-                            <a href="profile.php?user_id=<?php echo $view_tweet['user_id']; ?>">
-                                <img src="<?php echo HOME_URL; ?>views/img_uploaded/user/<?php echo $view_tweet['user_image_name']; ?>"  alt="">
+                            <a href="profile.php?user_id=<?php echo htmlspecialchars($view_tweet['user_id']); ?>">
+                                <img src="<?php echo buildImagePath($view_tweet['user_image_name'],'user') ; ?>"  alt="">
                             </a>
                         </div>
-                        <div class="content">'
+                        <div class="content">
                             <div class="name">
-                                <a href="profile.php?user_id=<?php echo $view_tweet['user_id']; ?>">
-                                    <span class="nickname"><?php echo $view_tweet['user_nickname']?></span>
-                                    <span class="user-name">@<?php echo $view_tweet['user_name']; ?>" ・ <?php echo convertTodayTimeAgo($view_tweet['tweet_created_at']); ?></span>
+                                <a href="profile.php?user_id=<?php echo htmlspecialchars($view_tweet['user_id']); ?>">
+                                    <span class="nickname"><?php echo htmlspecialchars($view_tweet['user_nickname']); ?></span>
+                                    <span class="user-name">@<?php echo htmlspecialchars($view_tweet['user_name']); ?>" ・ <?php echo convertTodayTimeAgo($view_tweet['tweet_created_at']); ?></span>
                                 </a>
                             </div>
                             <p><?php echo $view_tweet['tweet_body']; ?></p>
                             <!--画像があるときは下のimgタグを表示。構文内には処理の{}は必要ない-->
                             <?php if(isset($view_tweet['tweet_image_name'])) : ?>
-                            <img src="<?php echo HOME_URL;?>views/img_uploaded/tweet/<?php echo $view_tweet['tweet_image_name']; ?>" alt="" class="post-image"> 
+                            <img src="<?php echo buildImagePath($view_tweet['tweet_image_name'], 'tweet'); ?>" alt="" class="post-image"> 
                             <?php endif; ?>
                             
                             <div class="icon-list">
@@ -200,7 +222,7 @@ function convertTodayTimeAgo(string $datetime)      //指定したデータ型�
                                     ?>
                                 </div>
                                 <div class="like-count">
-                                    <?php echo $view_tweet['like_count']; ?>
+                                    <?php echo htmlspecialchars($view_tweet['like_count']); ?>
                                 </div>
                             </div>
                         </div>
