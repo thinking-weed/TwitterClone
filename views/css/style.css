@@ -1,4 +1,7 @@
 /*全体*/
+html{
+  height:100%;
+}
 .container {
   display: flex;
   justify-content: center;
@@ -17,15 +20,15 @@
 }
 @media screen and (max-width: 500px) {
   .container {
-      padding:0;
+    padding: 0;
   }
 
   .side {
-      width: 60px;
+    width: 60px;
   }
 
   .main {
-      width: calc(100% - 60px);
+    width: calc(100% - 60px);
   }
 }
 
@@ -34,17 +37,19 @@
 }
 
 button.btn:hover {
-    color: #fff;
+  color: #fff;
 }
 button.btn {
-    background-color: #1af;
-    color: #fff;
-    font-size: 15px;
-    font-weight: bold;
+  background-color: #1af;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
 }
 
-a{
-    text-decoration: none;
+a {
+  font-size: 13px;
+  color: #1af;
+  text-decoration: none;
 }
 
 /*サイド*/
@@ -83,20 +88,20 @@ a{
 
 @media screen and (max-width: 500px) {
   .side .side-inner img {
-      width:70%;
-      margin-bottom: 15px;
+    width: 70%;
+    margin-bottom: 15px;
   }
 
   .side .side-inner img.icon {
-      width: 85%;
+    width: 85%;
   }
 
   .side .side-inner img.post-tweet {
-      width: 100%;
+    width: 100%;
   }
 
   .side .side-inner .my-icon img {
-      width: 90%;
+    width: 90%;
   }
 }
 
@@ -148,78 +153,116 @@ a{
 }
 
 /*仕切りエリアのスタイルシート*/
-.home .ditch{
-    height: 15px;
-    background-color: #f7f8f8;
-    border-top: 1px solid #eef;
-    border-bottom: 1px solid #eef;
+.home .ditch {
+  height: 15px;
+  background-color: #f7f8f8;
+  border-top: 1px solid #eef;
+  border-bottom: 1px solid #eef;
 }
 
 /*つぶやき一覧エリアのスタイルシート*/
-.home .tweet-list .tweet{
-    padding: 10px;
-    display: flex;
-    border-bottom: 1px solid #eef;
+.home .tweet-list .tweet {
+  padding: 10px;
+  display: flex;
+  border-bottom: 1px solid #eef;
 }
-.home .tweet-list .tweet .user{
-    width: 80px;
-    padding: 5px 15px 10px 10px;
+.home .tweet-list .tweet .user {
+  width: 80px;
+  padding: 5px 15px 10px 10px;
 }
-.home .tweet-list .tweet .user img{
-    width: 100%;
-    border-radius: 50%;
-    border: 0.2px solid #aaa;
+.home .tweet-list .tweet .user img {
+  width: 100%;
+  border-radius: 50%;
+  border: 0.2px solid #aaa;
 }
-.home .tweet-list .tweet .name{
-    padding-top: 5px;
+.home .tweet-list .tweet .name {
+  padding-top: 5px;
 }
-.home .tweet-list .tweet .name a{
-    color: #122;
+.home .tweet-list .tweet .name a {
+  color: #122;
 }
-.home .tweet-list .tweet .name a .nickname{
-    color: #122;
-    font-size: 17px;
-    font-weight: bold;
+.home .tweet-list .tweet .name a .nickname {
+  color: #122;
+  font-size: 17px;
+  font-weight: bold;
 }
-.home .tweet-list .tweet .name a .user-name{
-    color: #444;
-    font-size: 14px;
+.home .tweet-list .tweet .name a .user-name {
+  color: #444;
+  font-size: 14px;
 }
-.home .tweet-list .tweet .content{
-    width: calc(100% - 60px);
+.home .tweet-list .tweet .content {
+  width: calc(100% - 60px);
 }
-.home .tweet-list .tweet .content p{
-    font-size: 16px;
-    padding: 8px 0 0 0;
-    margin-bottom: 8px;
+.home .tweet-list .tweet .content p {
+  font-size: 16px;
+  padding: 8px 0 0 0;
+  margin-bottom: 8px;
 }
-.home .tweet-list .tweet .content img.post-image{
-    width: 100%;
-    border-radius: 15px;
-    margin-bottom: 10px;
-    margin-right: 5px;
-    border: 1px solid #eef;
+.home .tweet-list .tweet .content img.post-image {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  border: 1px solid #eef;
 }
-.home .tweet-list .tweet .content .icon-list{
-    display: flex;
+.home .tweet-list .tweet .content .icon-list {
+  display: flex;
 }
-.home .tweet-list .tweet .content .icon-list .like img{
-    width: 25px;
-    margin-right: 10px;
-    cursor: pointer;
+.home .tweet-list .tweet .content .icon-list .like img {
+  width: 25px;
+  margin-right: 10px;
+  cursor: pointer;
 }
-.home .tweet-list .tweet .content .icon-list .like-count{
-    width: 25px;
-    padding-top: 2px;
-    color: #444;
+.home .tweet-list .tweet .content .icon-list .like-count {
+  width: 25px;
+  padding-top: 2px;
+  color: #444;
 }
 @media screen and (max-width: 500px) {
   .home .tweet-list .tweet .user {
-      width:60px;
-      padding: 5px 10px 10px 5px;
+    width: 60px;
+    padding: 5px 10px 10px 5px;
   }
 
   .bottom-area .btn {
-      margin-top: 10px;
+    margin-top: 10px;
   }
+}
+
+/*会員登録画面（ログイン画面共用）*/
+body.sign-up{
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    height: 100%;
+}
+.sign-up{
+    background-color: #123;
+    color: #fff;
+}
+.sign-up .form-sign-up{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+.sign-up .logo-white{
+    margin-bottom: 30px;
+    width: 50px;
+}
+.sign-up h1{
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+.sign-up input{
+    margin-bottom: 10px;
+    background-color: #123;
+    border-color: #456;
+    color: #fff;
+}
+.sign-up input:focus{
+    background-color: #123;
+    border-color: #1af;
+    color: #fff;
 }

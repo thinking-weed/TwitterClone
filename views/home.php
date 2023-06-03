@@ -115,6 +115,12 @@ function convertTodayTimeAgo(string $datetime)      //指定したデータ型�
     <!--bootstrapのrink-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo HOME_URL;?>views/css/style.css">
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous" defer></script>
+    <!-- JavaScript Bundle with Popper　下のBootstrapのscriptは上のjQueryの仕様に依存しているため下に貼り付けた -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous" defer></script>
+    <!--いいね！のjavascript、後ろのdeferはscriptの読み込みよりhtmlの読み込みを優先させる属性⇒全体の表示が早くなる-->
+    <script src="<?php echo HOME_URL; ?>views/js/Likes.js" defer></script>
     </head>
 <body class="home">
     <div class="container">
@@ -151,11 +157,13 @@ function convertTodayTimeAgo(string $datetime)      //指定したデータ型�
                             <img src="<?php echo HOME_URL;?>views/img/icon-post-tweet-twitterblue.svg" alt="" class="post-tweet">
                         </a>
                     </li>
-                    <li class="nav-item my-icon">
-                            <img src="<?php echo HOME_URL;?>views/img_uploaded/user/sample-person.jpg" alt="">
-                    </li>
-                </ul>
-            </div>
+                    <li class="nav-item my-icon"><!--左のdata-bs-containerは親要素を受けにくくするためのもの-->
+                            <img src="<?php echo HOME_URL;?>views/img_uploaded/user/sample-person.jpg" alt="" class="js-popover"
+                            data-bs-container="body"  data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true"-
+                            data-bs-content="<a href='profile.php'>プロフィール</a><br><a href='sign-out.php'>ログアウト</a>">
+                    </li>                           <!--toggleオプションでpopoverを初期化とは？おそらくtoggleをつけた-->
+                </ul>                               <!--placementオプションでポップを右側に表示-->
+            </div>                                  <!--data-bs-html～は次の～contentを書くのに必要なオプション-->
         </div>
         <div class="main">
             <div class="main-header">
@@ -210,7 +218,7 @@ function convertTodayTimeAgo(string $datetime)      //指定したデータ型�
                             <?php endif; ?>
                             
                             <div class="icon-list">
-                                <div class="like">
+                                <div class="like js-like" data-like-id="<?php echo htmlspecialchars($view_tweet['like_id']); ?>">
                                     <?php
                                     if(isset($view_tweet['like_id'])){
                                         //いいね！している場合、青のハートを表示
@@ -221,7 +229,7 @@ function convertTodayTimeAgo(string $datetime)      //指定したデータ型�
                                     } 
                                     ?>
                                 </div>
-                                <div class="like-count">
+                                <div class="like-count js-like-count">
                                     <?php echo htmlspecialchars($view_tweet['like_count']); ?>
                                 </div>
                             </div>
@@ -232,5 +240,11 @@ function convertTodayTimeAgo(string $datetime)      //指定したデータ型�
             <?php endif; ?>
         </div>
     </div>
+    <!--Javascriptのscriptタグはボディの閉じタグの上に基本書く-->
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            $('.js-popover').popover();     //第２引数の関数の処理部分
+        },false);//'DOMContentLoaded'はブラウザがHTMLを解析した直後、第二引数の関数が実行
+    </script>
 </body>
 </html>
