@@ -36,15 +36,25 @@ html{
   padding: 0.3rem 0.3rem;
 }
 
-button.btn:hover {
+.btn:hover {
   color: #fff;
 }
-button.btn {
+.btn {
   background-color: #1af;
   color: #fff;
   font-size: 15px;
   font-weight: bold;
 }
+
+.btn-reverse{
+    background-color: #fff;
+    color: #1af;
+    border: 1px solid #1af;
+}
+.btn-reverse:hover{
+    color: #1af;
+}
+
 
 a {
   font-size: 13px;
@@ -266,3 +276,48 @@ body.sign-up{
     border-color: #1af;
     color: #fff;
 }
+/*ユーザー画面のCSS*/
+.profile .profile-area{
+    padding: 25px;
+}
+.profile .profile-area .top{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.profile .profile-area .top .user{
+    padding: 5px 15px 10px 0px;
+    width: 30%;
+}
+.profile .profile-area .top .user img{
+    width: 100%;
+    border-radius: 50%;
+    border: 3px solid rgb(235 238 240);
+}
+.profile .profile-area .top button{
+    margin-bottom: 20px;
+}
+.profile .profile-area .name{
+    font-size: 18px;
+    font-weight: bold;
+}
+.profile .profile-area .follow-follower{
+    display: flex;
+    padding: 15px 0px 10px 0px;
+}
+.profile .profile-area .follow-follower .follow-count{
+    width: 30px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.profile .profile-area .follow-follower .follow-text{
+    width: 100px;
+    font-size: 16px;
+    margin-right: 30px;
+    color: #778;
+}
+
+
+
+
+

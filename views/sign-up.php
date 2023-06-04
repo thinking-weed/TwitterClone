@@ -21,7 +21,7 @@
             <!--placeholderはテキスト部分の背景文字を、maxlengthで入力可能文字数を入力、required は必須、autofocusはページ表示時自動選択されている状態にする設定-->
             <input type="text" class="form-control" name="name" placeholder="ユーザー名、例）techis132" maxlength="50" required >
             <input type="email" class="form-control" name="email" placeholder="メールアドレス" maxlength="254" required >
-            <input type="password" class="form-control" name="password" placeholder="パスワード" minlength="4" required >
+            <input type="password" class="form-control" name="password" placeholder="パスワード" minlength="4" maxlength="128" required >
             <button class="w-100 btn btn-lg" type="submit">登録する</button>
                 <!--w-100はwidth100「%」、btn-lgは大きな(large)ボタン-->
             <p class="mt-3 mb-2"><a href="sign-in.php">ログインする</a></p>
