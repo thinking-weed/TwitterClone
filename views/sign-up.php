@@ -1,11 +1,3 @@
-<?php
-//includeでもファイル読み込みができる。_onceをつけることで１回しか読み込みしない設定にする
-//設定関連を読み込む
-include_once('../config.php');
-//便利な関数を読み込む
-include_once('../util.php');
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
