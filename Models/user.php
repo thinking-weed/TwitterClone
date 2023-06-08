@@ -47,7 +47,60 @@ function createUser(array $data){
 
 }
 
+/*
+ユーザー情報を取得、ログインチェック
 
+@param  string $email
+@param  string $password
+@result array|false
+
+*/
+function findUserAndCheckPassword(string $email,string $password){
+    //DBに接続（$mysqliにオブジェクトの形で代入される）
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    if($mysqli->connect_errno){
+        echo 'MySQLの接続に失敗しました。  '  .$mysqli->connect_error . "\n";
+        exit;
+    }
+
+    //入力値をエスケープ
+    $email = $mysqli -> real_escape_string($email);
+
+    //SQLクエリを作成
+    //外部からのリクエストは何が入ってくるか分からないので、必ず、エスケープしたものをクオートで囲む
+    $query = 'SELECT * FROM users WHERE email = "' .$email. '" ';
+
+    //クエリ実行
+    $result = $mysqli ->query($query);
+
+    //クエリ実行に失敗した場合 -> return
+    if(!$result){
+        //MySQL処理中にエラーが発生
+        echo 'エラーメッセージ:' . $mysqli->error . "\n";
+        $mysqli ->close();
+        return false;
+    }
+    //ユーザー情報を取得
+    $user = $result -> fetch_array(MYSQLI_ASSOC);
+    //fetch_arrayはレコードを１つ取得するメソッド
+    //ユーザーが存在しない場合 ->return
+    if(!$user){
+        $mysqli -> close();
+        return false;
+    }
+    //パスワードチェック不一致の場合 ->return
+    if(!password_verify($password,$user['password'])){
+        $mysqli -> close();
+        return false;
+    }
+
+    //DB接続を解放
+    $mysqli -> close();
+
+    return $user;
+
+
+}
 
 
 

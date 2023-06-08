@@ -30,9 +30,9 @@
                 <a href="post.php" class="nav-link">
                     <img src="<?php echo HOME_URL;?>views/img/icon-post-tweet-twitterblue.svg" alt="" class="post-tweet">
                 </a>
-            </li>
+            </li><!--マイアイコンの画像のセッションのユーザー情報から読み取った画像-->
             <li class="nav-item my-icon"><!--左のdata-bs-containerは親要素を受けにくくするためのもの-->
-                    <img src="<?php echo HOME_URL;?>views/img_uploaded/user/sample-person.jpg" alt="" class="js-popover"
+                    <img src="<?php echo htmlspecialchars($view_user['image_path']); ?>" alt="" class="js-popover"
                     data-bs-container="body"  data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true"-
                     data-bs-content="<a href='profile.php'>プロフィール</a><br><a href='sign-out.php'>ログアウト</a>">
             </li>                           <!--toggleオプションでpopoverを初期化とは？おそらくtoggleをつけた-->

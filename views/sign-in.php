@@ -1,11 +1,3 @@
-<?php
-//includeでもファイル読み込みができる。_onceをつけることで１回しか読み込みしない設定にする
-//設定関連を読み込む
-include_once('../config.php');
-//便利な関数を読み込む
-include_once('../util.php');
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -17,7 +9,15 @@ include_once('../util.php');
     <main class="form-sign-up">
         <form action="sign-in.php" method="post">
             <img src="<?php echo HOME_URL; ?>views/img/logo-white.svg" alt="" class="logo-white">
-            <h1>Twitterクローンにログイン</h1>   <!--form-controlはbootstrap専用のクラスでなんとなくいい感じにしてくれる-->
+            <h1>Twitterクローンにログイン</h1>
+
+            <?php if(isset($view_try_login_result) && $view_try_login_result === false): ?>
+                <div class="alert alert-warning text-sm" role="alert">
+                    ログインに失敗しました。メールアドレス、パスワードが正しいかご確認ください。
+                </div>
+            <?php endif; ?>
+
+            <!--form-controlはbootstrap専用のクラスでなんとなくいい感じにしてくれる-->
             <!--placeholderはテキスト部分の背景文字を、maxlengthで入力可能文字数を入力、required は必須、autofocusはページ表示時自動選択されている状態にする設定-->
             <input type="email" class="form-control" name="email" placeholder="メールアドレス" required autofocus>
             <input type="password" class="form-control" name="password" placeholder="パスワード" required >
