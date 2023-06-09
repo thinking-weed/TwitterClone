@@ -1,16 +1,3 @@
-<?php
-//includeでもファイル読み込みができる。_onceをつけることで１回しか読み込みしない設定にする
-//設定関連を読み込む
-include_once('../config.php');
-//便利な関数を読み込む
-include_once('../util.php');
-
-
-//下の行までが一旦phpの区切り
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -29,7 +16,7 @@ include_once('../util.php');
             <!--つぶやき投稿エリア-->
             <div class="tweet-post">
                 <div class="my-icon">
-                    <img src="<?php echo HOME_URL;?>views/img_uploaded/user/sample-person.jpg" alt="">
+                    <img src="<?php echo htmlspecialchars($view_user['image_path']); ?>" alt="">
                 </div>
                 <div class="input-area">
                     <form action="post.php" method="post" enctype="multipart/form-data">
