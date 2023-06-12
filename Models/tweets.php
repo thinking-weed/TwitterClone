@@ -1,4 +1,8 @@
 <?php
+/////////////////////////////////
+//ツイートデータを処理
+/////////////////////////////////
+
 /*
 
 ツイート作成
@@ -18,7 +22,7 @@ function createTweet(array $data){
     //新規登録のSQLクエリを作成
     $query = 'INSERT INTO  tweets (user_id, body, image_name) VALUES(?,?,?)';
 
-    //プリペアステートメントにクエリを登録
+    //プリペアドステートメントにクエリを登録
     $statement = $mysqli -> prepare($query);
 
     //プレースホルダーにcolumn値を後付け（i = int 、s = string）
@@ -39,15 +43,16 @@ function createTweet(array $data){
 
 /*ツイート一覧を取得
 
-@param array $user
+@param array $user　ログインしているユーザー情報
+@param string $keyword 検索キーワード
 @return void
 */
-function findTweets(array $user){
-     //DBに接続（$mysqliにオブジェクトの形で代入される）
-    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+function findTweets(array $user, string $keyword = null){//第二引数は何もなければnull（ここではキーワードなし検索）を代入
+        //DBに接続（$mysqliにオブジェクトの形で代入される）
+        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     if($mysqli->connect_errno){
-    echo 'MySQLの接続に失敗しました。 : '  .$mysqli->connect_error . "\n";
-    exit;
+        echo 'MySQLの接続に失敗しました。 : '  .$mysqli->connect_error . "\n";
+        exit;
     }
 
      //ログインユーザーIDをエスケープ
@@ -81,6 +86,21 @@ function findTweets(array $user){
     WHERE
         T.status = 'active'
     SQL;
+
+    //検索キーワードが入力されている場合
+    if(isset($keyword)){
+        //エスケープ
+        $keyword = $mysqli->real_escape_string($keyword);
+        //ツイート主のニックネーム・ユーザー名・本文から部分一致検索
+        $query .= ' AND CONCAT(U.nickname, U.name, T.body) LIKE "%' . $keyword . '%" ';
+            // .= は「一番最後に付け加えて代入する」
+            //CONCATは引数の変数を連結
+    }
+    //新しい順に並び替え
+    $query .= ' ORDER BY T.created_at DESC'; //クエリを連結させる場合、スペースを適当に入れないと、
+    //表示件数５０件                          //文字列が変なところでくっつきクエリが上手く動かない
+    $query .= ' LIMIT 50';
+
     //クエリ実行
     $result = $mysqli->query($query);
     if($result){
