@@ -45,9 +45,10 @@ function createTweet(array $data){
 
 @param array $user　ログインしているユーザー情報
 @param string $keyword 検索キーワード
+@param array $user_ids ユーザーID一覧
 @return void
 */
-function findTweets(array $user, string $keyword = null){//第二引数は何もなければnull（ここではキーワードなし検索）を代入
+function findTweets(array $user, string $keyword = null, array $user_ids = null){//第二引数は何もなければnull（ここではキーワードなし検索）を代入
         //DBに接続（$mysqliにオブジェクトの形で代入される）
         $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     if($mysqli->connect_errno){
@@ -96,6 +97,18 @@ function findTweets(array $user, string $keyword = null){//第二引数は何も
             // .= は「一番最後に付け加えて代入する」
             //CONCATは引数の変数を連結
     }
+
+    //ユーザーIDが指定されている場合
+    if(isset($user_ids)){
+        foreach ($user_ids as $key => $user_id){
+            $user_ids[$key] = $mysqli->real_escape_string($user_id);
+        }
+        $user_ids_csv = '"' . join('","', $user_ids) . '"';
+        //ユーザーID一覧に含まれるユーザーで絞る IN(～)
+        $query .= ' AND T.user_id IN (' . $user_ids_csv . ')';
+    }
+
+
     //新しい順に並び替え
     $query .= ' ORDER BY T.created_at DESC'; //クエリを連結させる場合、スペースを適当に入れないと、
     //表示件数５０件                          //文字列が変なところでくっつきクエリが上手く動かない

@@ -9,7 +9,7 @@ include_once('../config.php');
 include_once('../util.php');
 
 //ユーザーデーター操作モデルを読み込み
-include_once('../Models/user.php');
+include_once('../Models/users.php');
 
 //ログイン結果
 $try_login_result = null;

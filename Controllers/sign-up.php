@@ -8,7 +8,7 @@ include_once('../config.php');
 //便利な関数を読み込む
 include_once('../util.php');
 //ユーザーデータ設定モデルを読み込み
-include_once('../Models/user.php');
+include_once('../Models/users.php');
 
 
 //登録情報が全て入力されていれば
